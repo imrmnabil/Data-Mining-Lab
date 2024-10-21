@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Text Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-box {
+            display: flex;
+            justify-content: space-between;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #007BFF;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Basic Text Search Engine</h2>
+        <form method="POST" class="search-box">
+            <input type="text" name="query" placeholder="Enter your search query..." value="{{ query }}" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if results %}
+        <div class="results">
+            <h3>Top 10 Search Results for "{{ query }}"</h3>
+            {% for result in results %}
+            <div class="result-item">
+                <p><strong>{{ result.document }}</strong> - Score: {{ result.score }}</p>
+                <p>{{ result.highlighted_text|safe }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif query %}
+        <div class="results">
+            <p>No results found for "{{ query }}"</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
